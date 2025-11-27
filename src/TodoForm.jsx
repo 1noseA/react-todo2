@@ -1,11 +1,26 @@
 import { useState } from 'react';
 
-function TodoForm() {
+function TodoForm({ onAddTodo }) {
   const [inputValue, setInputValue] = useState('');
+
+  const handleSubmit = (e) => {
+    e.preventDefault(); // ページのリロードを防ぐ
+
+    // 入力値が空の場合は何もしない
+    if (inputValue.trim() === '') {
+      return;
+    }
+
+    // 親コンポーネントのaddTodo関数を呼び出す
+    onAddTodo(inputValue.trim());
+
+    // 入力欄をクリア
+    setInputValue('');
+  }
 
   return (
     <div className="mb-6">
-      <form className="flex gap-2">
+      <form onSubmit={handleSubmit} className="flex gap-2">
         <input
           type="text"
           value={inputValue}

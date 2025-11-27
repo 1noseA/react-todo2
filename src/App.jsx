@@ -3,23 +3,25 @@ import TodoList from './TodoList';
 import TodoForm from './TodoForm';
 
 function App() {
-  const [todos, setTodos] = useState([
-    {
-      id: 1,
-      text: "Reactの基礎を学ぶ",
+  const [todos, setTodos] = useState([]);
+
+  // 新しいIDを生成する関数
+  const generateNewId = () => {
+    if (todos.length === 0) return 1;
+    const maxId = Math.max(...todos.map(todo => todo.id));
+    return maxId + 1;
+  };
+
+  // 新しいTodoを追加する関数
+  const addTodo = (text) => {
+    const newTodo = {
+      id: generateNewId(),
+      text: text,
       completed: false
-    },
-    {
-      id: 2,
-      text: "Todoアプリを作成する",
-      completed: false
-    },
-    {
-      id: 3,
-      text: "JavaScriptの復習をする",
-      completed: true
-    }
-  ]);
+    };
+
+    setTodos([...todos, newTodo]);
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 py-8">
@@ -28,8 +30,8 @@ function App() {
           Todo アプリ
         </h1>
         
-        <TodoForm />
-        
+        <TodoForm onAddTodo={addTodo} />
+
         <TodoList todos={todos} />
       </div>
     </div>
