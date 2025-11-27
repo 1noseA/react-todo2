@@ -16,6 +16,16 @@ function App() {
       id: 3,
       text: "JavaScriptの復習をする",
       completed: true
+    },
+    {
+      id: 4,
+      text: "Tailwind CSSでスタイリング",
+      completed: false
+    },
+    {
+      id: 5,
+      text: "コンポーネント設計を学ぶ",
+      completed: true
     }
   ];
 
