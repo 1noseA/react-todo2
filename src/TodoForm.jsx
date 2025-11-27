@@ -6,8 +6,16 @@ function TodoForm({ onAddTodo }) {
   const handleSubmit = (e) => {
     e.preventDefault(); // ページのリロードを防ぐ
 
-    // 入力値が空の場合は何もしない
-    if (inputValue.trim() === '') {
+    // 入力チェック
+    const trimmedValue = inputValue.trim();
+
+    if (trimmedValue === '') {
+      console.log('入力が空です')
+      return;
+    }
+
+    // 文字数制限（例：100文字まで）
+    if (trimmedValue.length > 100) {
       return;
     }
 
@@ -26,6 +34,7 @@ function TodoForm({ onAddTodo }) {
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
           placeholder="新しいTodoを入力してください"
+          maxLength={100}
           className="flex-1 px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
         />
         <button
