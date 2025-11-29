@@ -23,6 +23,12 @@ function App() {
     setTodos([...todos, newTodo]);
   };
 
+  // Todo削除関数を追加
+  const deleteTodo = (id) => {
+    const updatedTodos = todos.filter(todo => todo.id !== id);
+    setTodos(updatedTodos);
+  }
+
   return (
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-md mx-auto">
@@ -32,7 +38,7 @@ function App() {
         
         <TodoForm onAddTodo={addTodo} />
 
-        <TodoList todos={todos} />
+        <TodoList todos={todos} onDeleteTodo={deleteTodo} />
       </div>
     </div>
   )

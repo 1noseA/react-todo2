@@ -1,4 +1,9 @@
-function TodoItem({ todo }) {
+function TodoItem({ todo, onDeleteTodo }) {
+  // 削除ボタンのクリック処理
+  const handleDelete = () => {
+    onDeleteTodo(todo.id);
+  }
+
   return (
     <div className={`p-3 rounded shadow flex justify-between items-center ${
       todo.completed
@@ -18,7 +23,10 @@ function TodoItem({ todo }) {
         </p>
       </div>
 
-      <button className="ml-4 px-3 py-1 bg-red-500 text-white text-sm rounded hover:bg-red-600 focus:outline-none">
+      <button 
+        onClick={handleDelete}
+        className="ml-4 px-3 py-1 bg-red-500 text-white text-sm rounded hover:bg-red-600 focus:outline-none"
+      >
         削除
       </button>
     </div>
