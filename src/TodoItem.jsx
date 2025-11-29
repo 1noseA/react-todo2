@@ -1,7 +1,11 @@
 function TodoItem({ todo, onDeleteTodo }) {
   // 削除ボタンのクリック処理
   const handleDelete = () => {
-    onDeleteTodo(todo.id);
+    const isConfirmed = window.confirm(`「${todo.text}」を削除してもよろしいですか？`);
+
+    if (isConfirmed) {
+      onDeleteTodo(todo.id);
+    }
   }
 
   return (
