@@ -1,7 +1,9 @@
 import { useState } from 'react';
 
-function TodoItem({ todo, onDeleteTodo }) {
+function TodoItem({ todo, onDeleteTodo, onUpdateTodo }) {
+  // 編集モードの状態を管理
   const [isEditing, setIsEditing] = useState(false);
+  // 編集中のテキストを管理
   const [editText, setEditText] = useState(todo.text);
 
   const handleDelete = () => {
@@ -17,6 +19,31 @@ function TodoItem({ todo, onDeleteTodo }) {
     setIsEditing(true);
   };
 
+  // 編集をキャンセル
+  const handleEditCancel = () => {
+    setEditText(todo.text);
+    setIsEditing(false);
+  };
+
+  // 編集を保存
+  const handleEditSave = () => {
+    if (editText.trim() === '') {
+      return;
+    }
+
+    onUpdateTodo(todo.id, editText.trim());
+    setIsEditing(false);
+  };
+
+  // Enterキーで保存、Escapeキーでキャンセル
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      handleEditSave();
+    } else if (e.key === 'Escape') {
+      handleEditSave();
+    }
+  }
+
   return (
     <div className={`p-3 rounded shadow flex justify-between items-center ${
       todo.completed
@@ -25,13 +52,29 @@ function TodoItem({ todo, onDeleteTodo }) {
     }`}>
       <div className="flex-1">
         {isEditing ? (
-          // 編集モード：入力フォームを表示
-          <input
-            type="text"
-            value={editText}
-            onChange={(e) => setEditText(e.target.value)}
-            className="w-full px-2 py-1 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-          />
+          // 編集モード：入力フォームとボタンを表示
+          <div className="flex gap-2">
+            <input
+              type="text"
+              value={editText}
+              onChange={(e) => setEditText(e.target.value)}
+              onKeyDown={handleKeyDown}
+              className="flex-1 px-2 py-1 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+              autoFocus
+            />
+            <button
+              onClick={handleEditSave}
+              className="px-2 py-1 bg-green-500 text-white text-sm rounded hover:bg-green-600"
+            >
+              保存
+            </button>
+            <button
+              onClick={handleEditCancel}
+              className="px-2 py-1 bg-gray-500 text-white text-sm rounded hover:bg-gray-600"
+            >
+              キャンセル
+            </button>
+          </div>
         ) : (
           // 表示モード：テキストとクリックイベントを表示
           <div onClick={handleEditStart} className="cursor-pointer">

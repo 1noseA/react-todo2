@@ -23,10 +23,17 @@ function App() {
     setTodos([...todos, newTodo]);
   };
 
-  // Todo削除関数を追加
+  // Todo削除関数
   const deleteTodo = (id) => {
     const updatedTodos = todos.filter(todo => todo.id !== id);
     setTodos(updatedTodos);
+  }
+
+  // Todo更新関数
+  const updateTodo = (id, newText) => {
+    const updateTodos = todos.map(todo => todo.id === id ? { ...todo, text: newText } : todo
+    );
+    setTodos(updateTodos);
   }
 
   return (
@@ -38,7 +45,11 @@ function App() {
         
         <TodoForm onAddTodo={addTodo} />
 
-        <TodoList todos={todos} onDeleteTodo={deleteTodo} />
+        <TodoList
+          todos={todos}
+          onDeleteTodo={deleteTodo}
+          onUpdateTodo={updateTodo}
+        />
       </div>
     </div>
   )
