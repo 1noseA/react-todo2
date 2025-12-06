@@ -45,11 +45,16 @@ function TodoItem({ todo, onDeleteTodo, onUpdateTodo }) {
   }
 
   return (
-    <div className={`p-3 rounded shadow flex justify-between items-center ${
+    <div className={`p-3 rounded shadow flex items-center gap-3 ${
       todo.completed
         ? 'bg-green-50 border border-green-200'
         : 'bg-white'
     }`}>
+      <input
+        type="checkbox"
+        checked={todo.completed}
+        className="w-5 h-5"
+      />
       <div className="flex-1">
         {isEditing ? (
           // 編集モード：入力フォームとボタンを表示
