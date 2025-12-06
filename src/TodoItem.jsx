@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-function TodoItem({ todo, onDeleteTodo, onUpdateTodo }) {
+function TodoItem({ todo, onDeleteTodo, onUpdateTodo, onToggleTodo }) {
   // 編集モードの状態を管理
   const [isEditing, setIsEditing] = useState(false);
   // 編集中のテキストを管理
@@ -42,7 +42,12 @@ function TodoItem({ todo, onDeleteTodo, onUpdateTodo }) {
     } else if (e.key === 'Escape') {
       handleEditSave();
     }
-  }
+  };
+
+  // チェックボックスの変更処理
+  const handleToggle = () => {
+    onToggleTodo(todo.id);
+  };
 
   return (
     <div className={`p-3 rounded shadow flex items-center gap-3 ${
@@ -53,6 +58,7 @@ function TodoItem({ todo, onDeleteTodo, onUpdateTodo }) {
       <input
         type="checkbox"
         checked={todo.completed}
+        onChange={handleToggle}
         className="w-5 h-5"
       />
       <div className="flex-1">
